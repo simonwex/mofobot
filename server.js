@@ -1,6 +1,20 @@
-var ircHandler = require('./lib/ircHandler');
-var conf = require('./conf/configure');
-var habitat = require('habitat');
-var irc = require('irc');
+irc = require('irc');
+habitat = require('habitat');
 
-ircHandler('You dirty dog!');
+// SOURCE THE ENV FILE
+habitat.load('./.env');
+var env = new habitat('irc');
+
+// SET VARS FOR USE IN IRC
+var ircopts_host = env.get('host');
+var ircopts_channels = env.get('channels');
+var ircopts_port = env.get('port');
+var ircopts_ssl = env.get('ssl');
+var ircopts_autorejoin = env.get('autorejoin_enabled');
+var ircopts_username = env.get('username');
+var all_opts = env.all();
+
+var ircHandler = require('./lib/ircHandler');
+
+var msgtosend = "hotdog";
+var sendMsg = ircHandler.sendIrcMsg(ircopts_channels, "whatevs");
